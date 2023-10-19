@@ -32,11 +32,11 @@ Back-end API RestFul application, where the user registers movie notes, fills in
 
 ## 🔖 Project Layout
 
-![PRO2-1](./src/images/Untitled.png)
+![PRO2-1](public/Untitled.png)
 <br>
 <br>
 
-![PRO2-1](./src/images/Screenshot_9.png)
+![PRO2-1](public/Screenshot_9.png)
 
 <br>
  Rocket link: 
