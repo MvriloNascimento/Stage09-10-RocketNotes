@@ -46,11 +46,11 @@ export function New() {
 
   async function handleNewNote() {
     if (!title) {
-      return alert("Digite o título da nota");
+      return alert("Enter the title of the note");
     }
 
     if (newLink) {
-      return alert("Você deixou um link no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.");
+      return alert("You left a link in the add field, but didn't click add. Click to add or leave the field empty.");
     }
 
     if (newTag) {
