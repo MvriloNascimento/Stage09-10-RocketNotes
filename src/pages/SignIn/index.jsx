@@ -30,7 +30,7 @@ export function SignIn() {
         <h2>Log in</h2>
 
         <Input
-          placeholder="E-mail"
+          placeholder="Email"
           type="text"
           icon={FiMail}
           onChange={e => setEmail(e.target.value)}
