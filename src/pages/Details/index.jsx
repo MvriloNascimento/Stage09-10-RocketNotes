@@ -1,31 +1,34 @@
-import { useState, useEffect } from 'react';
-import { Container, Links, Content } from "./styles";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { api } from '../../services/api';
-
-import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
+import { ButtonText } from "../../components/ButtonText";
+import { Header } from "../../components/Header";
 import { Section } from "../../components/Section";
 import { Tag } from "../../components/Tag";
-import { ButtonText } from "../../components/ButtonText";
+import { Container, Links, Content } from "./styles.js";
+
+
+import { api } from "../../services/api";
+
+//useParams = buscar parâmetros na pagina
 
 export function Details() {
   const [data, setData] = useState(null);
-
   const params = useParams();
   const navigate = useNavigate();
+
+  console.log(data);
 
   function handleBack() {
     navigate(-1);
   }
 
   async function handleRemove() {
-    const confirm = window.confirm("Do you really want to remove the note?");
-
+    const confirm = window.confirm("I really want to remove a note?");
     if (confirm) {
       await api.delete(`/notes/${params.id}`);
-      navigate(-1);
+      handleBack();
     }
   }
 
@@ -34,68 +37,46 @@ export function Details() {
       const response = await api.get(`/notes/${params.id}`);
       setData(response.data);
     }
-
     fetchNote();
   }, []);
 
   return (
     <Container>
       <Header />
-      {
-        data &&
+      {data && (
         <main>
           <Content>
-            <ButtonText
-              title="Delete note"
-              onClick={handleRemove}
-            />
+            <ButtonText title="Delete note" onClick={handleRemove} />
 
-            <h1>
-              {data.title}
-            </h1>
+            <h1>{data.title}</h1>
+            <p>{data.description}</p>
 
-            <p>
-              {data.description}
-            </p>
-
-            {
-              data.links &&
-              <Section title="Useful Links">
+            {data.links && (
+              <Section title="Useful links">
                 <Links>
-                  {
-                    data.links.map(link => (
-                      <li key={String(link.id)}>
-                        <a href={link.url} target="_blank">
-                          {link.url}
-                        </a>
-                      </li>
-                    ))
-                  }
+                  {data.links.map((link) => (
+                    <li key={String(link.id)}>
+                      <a href={link.url} target="_blank">
+                        {link.url}
+                      </a>
+                    </li>
+                  ))}
                 </Links>
               </Section>
-            }
+            )}
 
-            {
-              data.tags &&
+            {data.tags && (
               <Section title="Tags">
-                {
-                  data.tags.map(tag => (
-                    <Tag
-                      key={String(tag.id)}
-                      title={tag.name}
-                    />
-                  ))
-                }
+                {data.tags.map((tag) => (
+                  <Tag key={String(tag.id)} title={tag.name} />
+                ))}
               </Section>
-            }
+            )}
 
-            <Button
-              title="Back"
-              onClick={handleBack}
-            />
+            <Button title="Back" onClick={handleBack} />
           </Content>
         </main>
-      }
+      )}
     </Container>
-  )
+  );
 }
